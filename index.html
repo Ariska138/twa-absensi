@@ -10,26 +10,31 @@
 <body>
   <h1>PWA dengan Fitur Lokasi</h1>
   <p>Lokasi pengguna: <span id="location"></span></p>
-  <a href="/tandaTangan/" target="_self">Tanda Tangan</a>
-  <a href="/foto.html" target="_self">Foto</a>
+  <div><button onclick="dapatLokasi()">Klik Disini</button></div>
+  <div> <a href="/tandaTangan/" target="_self">Tanda Tangan</a></div>
+  <div><a href="/foto.html" target="_self">Foto</a>
+  </div>
+
 
   <script>
-
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(function (position) {
-        const locationElement = document.getElementById('location');
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        alert(`Lat: ${latitude}, Lon: ${longitude}`);
-        locationElement.textContent = `Lat: ${latitude}, Lon: ${longitude}`;
-      }, function (error) {
-        alert('Gagal mendapatkan lokasi:', error.message);
-        console.error('Gagal mendapatkan lokasi:', error.message);
-      });
-    } else {
-      alert('Browser tidak mendukung geolocation.');
-      console.log('Browser tidak mendukung geolocation.');
+    function dapatLokasi() {
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          const locationElement = document.getElementById('location');
+          const latitude = position.coords.latitude;
+          const longitude = position.coords.longitude;
+          alert(`Lat: ${latitude}, Lon: ${longitude}`);
+          locationElement.textContent = `Lat: ${latitude}, Lon: ${longitude}`;
+        }, function (error) {
+          alert('Gagal mendapatkan lokasi:', error.message);
+          console.error('Gagal mendapatkan lokasi:', error.message);
+        });
+      } else {
+        alert('Browser tidak mendukung geolocation.');
+        console.log('Browser tidak mendukung geolocation.');
+      }
     }
+    dapatLokasi();
   </script>
 </body>
 
