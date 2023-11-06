@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TD</title>
+</head>
+
+<body>
+  <canvas id="signature-pad"></canvas>
+  <button id="clearSignatureButton">Hapus Tanda Tangan</button>
+  <button id="saveSignatureButton">Simpan Tanda Tangan</button>
+  <script>
+    const canvas = document.getElementById('signature-pad');
+    const clearSignatureButton = document.getElementById('clearSignatureButton');
+    const saveSignatureButton = document.getElementById('saveSignatureButton');
+
+    const signaturePad = new SignaturePad(canvas);
+
+    clearSignatureButton.addEventListener('click', () => {
+      signaturePad.clear();
+    });
+
+    saveSignatureButton.addEventListener('click', () => {
+      if (signaturePad.isEmpty()) {
+        alert('Tanda tangan kosong. Silakan tanda tangani terlebih dahulu.');
+      } else {
+        const signatureDataUrl = signaturePad.toDataURL(); // Mendapatkan gambar tanda tangan dalam format data URL
+        // Simpan atau kirim gambar tanda tangan sesuai kebutuhan Anda
+      }
+    });
+
+  </script>
+</body>
+
+</html>

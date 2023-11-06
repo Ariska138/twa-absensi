@@ -1,60 +1,69 @@
-// Mendapatkan referensi ke elemen HTML
-const captureButton = document.getElementById('captureButton');
-const locationData = document.getElementById('locationData');
-const latitude = document.getElementById('latitude');
-const longitude = document.getElementById('longitude');
-const signatureCanvas = document.getElementById('signatureCanvas');
-const clearSignature = document.getElementById('clearSignature');
+// Mengambil Gambar dari Kamera
+async function takePicture() {
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+    const video = document.createElement('video');
+    const captureButton = document.createElement('button');
+    const canvas = document.createElement('canvas');
 
-// Fitur mengambil gambar dengan kamera
-captureButton.addEventListener('click', () => {
-  // Anda dapat menambahkan logika untuk mengakses kamera di sini
-  alert('Mengambil gambar dengan kamera...');
-});
+    // Menampilkan video dari kamera
+    document.body.appendChild(video);
+    video.srcObject = stream;
+    video.play();
 
-// Fitur menampilkan lokasi
-if ('geolocation' in navigator) {
-  navigator.geolocation.getCurrentPosition((position) => {
-    const { coords } = position;
-    latitude.textContent = coords.latitude;
-    longitude.textContent = coords.longitude;
-  });
-} else {
-  locationData.textContent = 'Lokasi tidak tersedia';
+    // Mengambil gambar saat tombol di klik
+    captureButton.textContent = 'Ambil Gambar';
+    document.body.appendChild(captureButton);
+    captureButton.addEventListener('click', () => {
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      const image = canvas.toDataURL('image/png');
+      // Simpan atau kirim gambar sesuai kebutuhan Anda
+    });
+  } catch (error) {
+    console.error('Gagal mengakses kamera:', error);
+  }
 }
 
-// Fitur tanda tangan digital
-const signatureContext = signatureCanvas.getContext('2d');
-let isDrawing = false;
+// Mendapatkan Lokasi
+function getLocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        // Gunakan latitude dan longitude sesuai kebutuhan Anda
+      },
+      (error) => {
+        console.error('Gagal mendapatkan lokasi:', error);
+      }
+    );
+  } else {
+    console.error('Geolokasi tidak didukung di perangkat ini');
+  }
+}
 
-signatureCanvas.addEventListener('mousedown', (e) => {
-  isDrawing = true;
-  signatureContext.beginPath();
-  signatureContext.moveTo(
-    e.clientX - signatureCanvas.offsetLeft,
-    e.clientY - signatureCanvas.offsetTop
+// Membuat Tanda Tangan
+function createSignature() {
+  const signaturePad = new SignaturePad(
+    document.getElementById('signature-pad')
   );
-});
+  // Konfigurasi SignaturePad sesuai kebutuhan Anda
 
-signatureCanvas.addEventListener('mousemove', (e) => {
-  if (!isDrawing) return;
-  signatureContext.lineTo(
-    e.clientX - signatureCanvas.offsetLeft,
-    e.clientY - signatureCanvas.offsetTop
-  );
-  signatureContext.stroke();
-});
+  const clearButton = document.getElementById('clear-signature');
+  clearButton.addEventListener('click', () => {
+    signaturePad.clear();
+  });
 
-signatureCanvas.addEventListener('mouseup', () => {
-  isDrawing = false;
-});
+  const saveButton = document.getElementById('save-signature');
+  saveButton.addEventListener('click', () => {
+    const signatureImage = signaturePad.toDataURL(); // Menghasilkan gambar tanda tangan
+    // Simpan atau kirim gambar tanda tangan sesuai kebutuhan Anda
+  });
+}
 
-// Tombol untuk menghapus tanda tangan
-clearSignature.addEventListener('click', () => {
-  signatureContext.clearRect(
-    0,
-    0,
-    signatureCanvas.width,
-    signatureCanvas.height
-  );
-});
+// Panggil fungsi-fungsi di atas sesuai kebutuhan
+takePicture();
+getLocation();
+createSignature();

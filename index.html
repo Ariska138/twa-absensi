@@ -1,39 +1,32 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
-  <title>Prototipe Aplikasi</title>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('/sw.js').then(function (registration) {
-          console.log('Service Worker registered with scope:', registration.scope);
-        }).catch(function (error) {
-          console.log('Service Worker registration failed:', error);
-        });
-      });
-    }
-  </script>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PWA dengan Fitur Lokasi</title>
 </head>
 
 <body>
-  <h1>Prototipe Aplikasi</h1>
+  <h1>PWA dengan Fitur Lokasi</h1>
+  <p>Lokasi pengguna: <span id="location"></span></p>
+  <a href="/tandaTangan/" target="_self">Tanda Tangan</a>
+  <a href="/foto.html" target="_self">Foto</a>
 
-  <!-- Tombol untuk Mengambil Gambar -->
-  <button id="captureButton">Ambil Gambar</button>
-
-  <!-- Menampilkan Lokasi -->
-  <div id="locationData">
-    Lokasi: <span id="latitude"></span>, <span id="longitude"></span>
-  </div>
-
-  <!-- Tanda Tangan Digital -->
-  <canvas id="signatureCanvas" width="300" height="100"></canvas>
-  <button id="clearSignature">Hapus Tanda Tangan</button>
-
-  <script src="script.js"></script>
+  <script>
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        const locationElement = document.getElementById('location');
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        locationElement.textContent = `Lat: ${latitude}, Lon: ${longitude}`;
+      }, function (error) {
+        console.error('Gagal mendapatkan lokasi:', error.message);
+      });
+    } else {
+      console.log('Browser tidak mendukung geolocation.');
+    }
+  </script>
 </body>
 
 </html>
