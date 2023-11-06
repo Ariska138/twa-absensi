@@ -18,21 +18,37 @@
 
   <script>
     function dapatLokasi() {
-      if ('geolocation' in navigator) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          const locationElement = document.getElementById('location');
-          const latitude = position.coords.latitude;
-          const longitude = position.coords.longitude;
-          alert(`Lat: ${latitude}, Lon: ${longitude}`);
-          locationElement.textContent = `Lat: ${latitude}, Lon: ${longitude}`;
-        }, function (error) {
+      var x = document.getElementById("location");
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(tampilPosisi, function (error) {
           alert('Gagal mendapatkan lokasi:', error.message);
-          console.error('Gagal mendapatkan lokasi:', error.message);
+          console.error('Gagal mendapatkan lokasi:', error.message)
+
         });
       } else {
-        alert('Browser tidak mendukung geolocation.');
-        console.log('Browser tidak mendukung geolocation.');
+        x.innerHTML = "Browser kamu terlalu tua, upgrade ke versi terbaru.";
       }
+      function tampilPosisi(position) {
+        x.innerHTML = "Latitude: " + position.coords.latitude +
+          "<br>Longitude: " + position.coords.longitude;
+        alert("Latitude: " + position.coords.latitude +
+          "<br>Longitude: " + position.coords.longitude)
+      }
+      // if ('geolocation' in navigator) {
+      //   navigator.geolocation.getCurrentPosition(function (position) {
+      //     const locationElement = document.getElementById('location');
+      //     const latitude = position.coords.latitude;
+      //     const longitude = position.coords.longitude;
+      //     alert(`Lat: ${latitude}, Lon: ${longitude}`);
+      //     locationElement.textContent = `Lat: ${latitude}, Lon: ${longitude}`;
+      //   }, function (error) {
+      //     alert('Gagal mendapatkan lokasi:', error.message);
+      //     console.error('Gagal mendapatkan lokasi:', error.message);
+      //   });
+      // } else {
+      //   alert('Browser tidak mendukung geolocation.');
+      //   console.log('Browser tidak mendukung geolocation.');
+      // }
     }
     dapatLokasi();
   </script>
