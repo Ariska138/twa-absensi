@@ -14,6 +14,7 @@
   <a href="/foto.html" target="_self">Foto</a>
 
   <script>
+
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(function (position) {
         const locationElement = document.getElementById('location');
@@ -21,9 +22,11 @@
         const longitude = position.coords.longitude;
         locationElement.textContent = `Lat: ${latitude}, Lon: ${longitude}`;
       }, function (error) {
+        alert('Gagal mendapatkan lokasi:', error.message);
         console.error('Gagal mendapatkan lokasi:', error.message);
       });
     } else {
+      alert('Browser tidak mendukung geolocation.');
       console.log('Browser tidak mendukung geolocation.');
     }
   </script>
