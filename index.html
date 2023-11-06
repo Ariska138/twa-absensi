@@ -20,6 +20,7 @@
         const locationElement = document.getElementById('location');
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
+        alert(`Lat: ${latitude}, Lon: ${longitude}`);
         locationElement.textContent = `Lat: ${latitude}, Lon: ${longitude}`;
       }, function (error) {
         alert('Gagal mendapatkan lokasi:', error.message);
