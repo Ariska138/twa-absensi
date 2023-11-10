@@ -1,3 +1,12 @@
 .gradle
 app
 app-*
+build.gradle
+gradle.properties
+gradlew
+manifest-checksum.txt
+sdkmanager
+settings.gradle
+twa-manifest.json
+gradle-wrapper.jar
+gradle-wrapper.properties
