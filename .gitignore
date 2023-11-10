@@ -3,7 +3,7 @@ app
 app-*
 build.gradle
 gradle.properties
-gradlew
+gradlew*
 manifest-checksum.txt
 sdkmanager
 settings.gradle
