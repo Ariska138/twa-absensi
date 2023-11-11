@@ -1,0 +1,10 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "app.vercel.twa_absensi.twa",
+    "sha256_cert_fingerprints": [
+      "E2:5F:98:54:67:00:5E:66:2D:E9:A3:10:2F:6C:8D:0B:63:33:31:2D:AB:78:AE:3E:FF:1F:79:B0:90:06:E0:54"
+    ]
+  }
+}]
